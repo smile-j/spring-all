@@ -47,9 +47,9 @@ public class UserController {
         List<ServiceInstance> instances = client.getInstances("user-server");
         ServiceInstance selectedInstance = instances
                 .get(new Random().nextInt(instances.size()));
-        int num = random.ints(100,1000).findFirst().getAsInt();
+        int num = random.ints(500,1500).findFirst().getAsInt();
         logger.info(".....sleep ...."+num);
-        Thread.sleep(num);
+//        Thread.sleep(num);
         return "Hello World: " + selectedInstance.getServiceId() + ":" + selectedInstance
                 .getHost() + ":" + selectedInstance.getPort();
     }

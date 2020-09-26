@@ -1,0 +1,79 @@
+server:
+  port: 9501
+
+spring:
+  application:
+    name: gateway-proxy
+  redis:
+    host: localhost
+#    password:
+    port: 6379
+    database: 0
+  cloud:
+    gateway:
+      routes:
+      - id: url-proxy-1
+        uri: https://www.baidu.com
+        predicates:
+        - Path=/baidu/aa/**
+        filters:
+          - StripPrefix=2
+          - name: RequestRateLimiter
+            args:
+              key-resolver: '#{@uriKeyResolver}'
+              redis-rate-limiter.replenishRate: 1
+              redis-rate-limiter.burstCapacity: 2
+      - id: user-server
+        uri: http://localhost:9301/
+        predicates:
+        - Path=/userService/**
+        filters:
+          - StripPrefix=1
+      - id: user-server2
+        uri: lb://user-server
+        predicates:
+        - Path=/userService2/**
+        filters:
+          - StripPrefix=1
+          - name: Retry
+            args:
+              retries: 2
+              series:
+                - SERVER_ERROR
+
+              statuses:  #取值请参考：org.springframework.http.HttpStatus
+                - OK
+                - BAD_GATEWAY
+              methods:
+                - GET
+                - POST
+              exceptions:
+                - java.io.IOException
+      - id: hystrix_route
+        uri: lb://user-server
+        predicates:
+        - Path=/consumingserviceendpoint/**
+        filters:
+          - StripPrefix=1
+          - name: Hystrix
+            args:
+              name: fallbackcmd
+              fallbackUri: forward:/fallback
+
+# hystrix 信号量隔离，3秒后自动超时
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 1000
+  shareSecurityContext: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka/

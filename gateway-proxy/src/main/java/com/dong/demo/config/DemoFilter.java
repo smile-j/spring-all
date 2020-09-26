@@ -7,7 +7,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class DemoFilter extends AbstractGatewayFilterFactory {
 
     private Logger log = LoggerFactory.getLogger(DemoFilter.class);

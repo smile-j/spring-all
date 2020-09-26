@@ -11,11 +11,24 @@ import org.springframework.context.annotation.Configuration;
 //@Configuration
 public class GatewayConfig {
 
-    @Bean
+  /*  @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("path_route2", r -> r.path("/user/getByUsername")
                         .uri("http://localhost:8201/user/getByUsername"))
                 .build();
+    }*/
+  @Bean
+  public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+      return builder.routes()
+              .route("path_route", r -> r.path("/csdn")
+                      .uri("https://blog.csdn.net"))
+              .build();
+  }
+
+    @Bean
+    public HostAddrKeyResolver hostAddrKeyResolver() {
+        return new HostAddrKeyResolver();
     }
+
 }
