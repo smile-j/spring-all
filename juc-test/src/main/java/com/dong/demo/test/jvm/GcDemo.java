@@ -1,27 +1,59 @@
 package com.dong.demo.test.jvm;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
  * java -XX:+PrintCommandLineFlags -version
  *
- * 1. Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseSerialGC   (DefNew+Tenured)
+ * 1. -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseSerialGC   (DefNew+Tenured)
+ *
+ * 2. -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseParNewGC   (ParNew+Tenured)
+ *  备注：Java HotSpot(TM) 64bit Server VM waring:
+ *      Using the ParNew young collector with the Serial old collector is deprecated
+ *      and will likely be removed in a future release
+ *
+ * 3. -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseParallelGC   (PSYoungGEn+ParOldGen)
+ *
+ *
+ * 4
+ *
+ * 4.1
+ * -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseParallelOldGC   (PSYoungGEn+ParOldGen)
+ * 4.2 不加默认UseParallelGC
+ * -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags    (PSYoungGEn+ParOldGen)
+ *
+ * 5. -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseConcMarkSweepGC  (par new generation+concurrent mark-sweep)
+ *
+ * 6.-Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseG1GC
+ *
+ * 7.(理论知道即可，实际已经被优化掉了，没有了)
+ * -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseSerialOldGC
+ *
+ *
+ *  为了学习，一般生产不这么配置
+ *
+ * -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseParallelOldGC -XX:+UseSerialOldGC  (PSYoungGEn+ParOldGen)
+ *
+ * -Xms10m -Xmx10m -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:+UseParNewGC -XX:+UseConcMarkSweepGC   (par new generation+concurrent mark-sweep)
  *
  */
-public class HelloGc {
+public class GcDemo {
 
     public static void main(String[] args) throws InterruptedException {
 
-//        long totalMemory = Runtime.getRuntime().totalMemory();//返回java 虚拟机中的内存总量   默认为内存的 1/64
-////        long maxMemory = Runtime.getRuntime().maxMemory();//返回java虚拟机试图使用的最大内存量  默认为内存的 1/4
-////        System.out.println("TOTAL_MEMORY(-Xms) = " + totalMemory + "(字节)、" + totalMemory/(double)1024/1024 +"MB");
-////        System.out.println("MAX_MEMORY(-Xms) = " + maxMemory + "(字节)、" + maxMemory/(double)1024/1024 +"MB");
-//        byte [] bytes = new byte[1024*1024];
-//        TimeUnit.SECONDS.sleep(Integer.MAX_VALUE);
-        System.out.println("hello world   start !!!");
-//        byte [] bytes = new byte[50*1024*1024];
-        TimeUnit.SECONDS.sleep(Integer.MAX_VALUE);
-        System.out.println("hello world  end !!!");
+        System.out.println("......start");
+        try {
+            String str ="hello world";
+            while (true){
+                str+=str+new Random().nextInt(777777)+new Random().nextInt(6666666);
+                str.intern();
+
+            }
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+        System.out.println("...........end");
     }
 
 }

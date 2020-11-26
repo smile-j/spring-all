@@ -1,4 +1,7 @@
 package com.dong.demo.undertow.service;
 
-public class LongTermTaskCallback {
+public interface LongTermTaskCallback {
+
+    void callback(Object result);
+
 }

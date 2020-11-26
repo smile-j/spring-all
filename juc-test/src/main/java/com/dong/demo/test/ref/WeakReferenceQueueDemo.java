@@ -6,20 +6,21 @@ import java.lang.ref.WeakReference;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class PhantomReferenceDemo {
+public class WeakReferenceQueueDemo {
 
     public static void main(String[] args) throws InterruptedException {
 
         Object o1 = new Object();
-        ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
+        ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
 //        PhantomReference<Object> phantomReference = new PhantomReference<>(o1,referenceQueue);
-        WeakReference<Object> phantomReference = new WeakReference<>(o1,referenceQueue);
+        WeakReference<Object> phantomReference = new WeakReference<Object>(o1,referenceQueue);
 
         System.out.println(o1);
         System.out.println(phantomReference.get());
         System.out.println(referenceQueue.poll());
         System.out.println("=======================");
         o1=null;
+        System.gc();
         Thread.sleep(3);
 
 
