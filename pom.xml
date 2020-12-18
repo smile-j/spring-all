@@ -19,6 +19,7 @@
         <module>eureka-client</module>
         <module>eureka-service</module>
         <module>juc-test</module>
+        <module>webflux2</module>
     </modules>
 
 
