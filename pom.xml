@@ -20,6 +20,7 @@
         <module>eureka-service</module>
         <module>juc-test</module>
         <module>webflux2</module>
+        <module>webfluxClient</module>
     </modules>
 
 
