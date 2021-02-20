@@ -1,4 +1,4 @@
-package com.dong.demo.datastructures;
+package com.dong.demo.datastructures.stack;
 
 import java.util.Stack;
 

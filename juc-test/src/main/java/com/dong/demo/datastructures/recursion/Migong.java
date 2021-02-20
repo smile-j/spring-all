@@ -1,5 +1,9 @@
 package com.dong.demo.datastructures.recursion;
 
+/**
+ * 迷宫
+ *
+ */
 public class Migong {
 
     public static void main(String[] args) {
