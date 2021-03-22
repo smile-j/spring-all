@@ -21,6 +21,7 @@
         <module>juc-test</module>
         <module>webflux2</module>
         <module>webfluxClient</module>
+        <module>boot_reids</module>
     </modules>
 
 
