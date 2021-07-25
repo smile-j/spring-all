@@ -1,0 +1,6 @@
+server:
+  port: 8088
+
+util:
+  date:
+    latitude: 30d
