@@ -1,17 +1,25 @@
 package org.dong.start.rocketmq.test;
 
+import cn.hutool.db.sql.Order;
+import com.alibaba.fastjson.JSON;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.CountDownLatch2;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.apache.rocketmq.remoting.exception.RemotingException;
+import org.dong.start.rocketmq.vo.OrderVo;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,11 +31,14 @@ public class SendMsg {
 
     public static void main(String[] args) throws MQClientException, MQBrokerException, RemotingException, Exception {
 //        syncProducer();
+        sendOrderMsg();
 
-       //1．创建消息生产者，指定生产者所属的组名
+      //1．创建消息生产者，指定生产者所属的组名
         DefaultMQProducer producer = new DefaultMQProducer("myproducer-group");
         //2．指定Nameserver地址
         producer.setNamesrvAddr ("127.0.0.1:9876");
+        //同步发送失败重试次数
+        producer.setRetryTimesWhenSendFailed(2);
         //3．启动生产者
         producer.start();
         //4．创建消息对象,指定主题、标签和消息体
@@ -38,6 +49,61 @@ public class SendMsg {
         //6．关闭生产者
         producer.shutdown();
 
+
+    }
+
+    /**
+     * 延迟消息 固定时间
+     */
+    public static void sendDelayMsg(){
+
+    }
+
+    //发送顺序消息
+    public static void sendOrderMsg() throws MQClientException, MQBrokerException, RemotingException, InterruptedException {
+
+        List<OrderVo> orderVos = Arrays.<OrderVo>asList(
+                new OrderVo().setOrderId(1039L).setDesc("创建"),new OrderVo().setOrderId(1063L).setDesc("创建"),
+                new OrderVo().setOrderId(2039L).setDesc("创建"),new OrderVo().setOrderId(1039L).setDesc("付款"),
+                new OrderVo().setOrderId(1063L).setDesc("付款"),new OrderVo().setOrderId(1039L).setDesc("推送"),
+                new OrderVo().setOrderId(2039L).setDesc("付款"),new OrderVo().setOrderId(1039L).setDesc("完成")
+        );
+
+        //1．创建消息生产者，指定生产者所属的组名
+        DefaultMQProducer producer = new DefaultMQProducer("myproducer-group");
+        //2．指定Nameserver地址
+        producer.setNamesrvAddr ("127.0.0.1:9876");
+        //3．启动生产者
+        producer.start();
+        int i =0;
+        for(OrderVo vo:orderVos){
+            i++;
+            //4．创建消息对象,指定主题、标签和消息体
+            Message msg = new Message( "orderTopic" , "order" ,"i"+i, JSON.toJSONString(vo).getBytes());
+            /**
+             *
+             * 发送消息 第二个参数 队列选择的选择器
+             *  第三个参数  选择队列的业务表示（订单id）
+             */
+            SendResult sendResult = producer.send(msg, new MessageQueueSelector() {
+                /**
+                 *
+                 * @param list  消息队列的集合
+                 * @param message 消息对象
+                 * @param o 业务标识参数
+                 * @return
+                 */
+                @Override
+                public MessageQueue select(List<MessageQueue> list, Message message, Object o) {
+                    long oderId = (long) o;
+                    long index = oderId%list.size();
+                    return list.get((int) index);
+                }
+            },vo.getOrderId()) ;
+            System.out.println(sendResult);
+        }
+        //6．关闭生产者
+        producer.shutdown();
 
     }
 
@@ -55,6 +121,8 @@ public class SendMsg {
     public static void syncProducer() throws MQClientException, UnsupportedEncodingException, MQBrokerException, RemotingException, InterruptedException {
         DefaultMQProducer producer = new DefaultMQProducer("myproducer-group");
         producer.setNamesrvAddr("127.0.0.1:9876");
+        //同步发送失败重试次数
+        producer.setRetryTimesWhenSendFailed(2);
         producer.start();
         for (int i=20;i>0;i--){
             Message msg = new Message("myTopic","myTag",("hello rocketmq "+i).getBytes(RemotingHelper.DEFAULT_CHARSET));
@@ -73,6 +141,7 @@ public class SendMsg {
         producer.setNamesrvAddr("localhost:9876");
         // 启动Producer实例
         producer.start();
+        //发送失败重试次数  不会重新选择其他的borker
         producer.setRetryTimesWhenSendAsyncFailed(0);
 
         int messageCount = 100;

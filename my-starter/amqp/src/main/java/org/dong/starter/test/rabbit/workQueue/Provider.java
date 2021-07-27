@@ -28,7 +28,7 @@ public class Provider {
 //        channel.basicPublish("","work",null,"hello work queue".getBytes());
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-        for(int i=0;i<20;i++){
+        for(int i=0;i<2;i++){
 //            TimeUnit.SECONDS.sleep(1);
 //            channel.basicPublish("","work",null,("hello work queue--"+format.format(new Date())).getBytes());
             channel.basicPublish("","work",null,(i+"").getBytes());

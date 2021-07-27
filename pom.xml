@@ -19,9 +19,10 @@
         <module>eureka-client</module>
         <module>eureka-service</module>
         <module>juc-test</module>
-        <module>webflux2</module>
+        <module>webflux</module>
         <module>webfluxClient</module>
         <module>boot_reids</module>
+        <module>my-starter</module>
     </modules>
 
 
