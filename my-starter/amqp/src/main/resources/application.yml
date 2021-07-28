@@ -14,18 +14,27 @@ spring:
     publisher-returns: true
     publisher-confirm-type: simple
     listener:
-      direct:
-        acknowledge-mode: manual
-        retry:
-          enabled: true
-          max-attempts: 5
+#      direct:
+#        acknowledge-mode: manual
+#        retry:
+#          enabled: true
+#          max-attempts: 5
       #        prefetch: 1
       type: simple
       simple:
+        #消费者连接数量
         concurrency: 5
         max-concurrency: 10
         # 消息开启手动确认
         acknowledge-mode: manual
+        #重试的配置
         retry:
           enabled: true
           max-attempts: 5
+          multiplier: 1.0
+        #消费者消费数据失败重试
+        default-requeue-rejected: true
+        #消费者启动
+        auto-startup: true
+        #每个消费者可以未确认的最大未确认消息数
+        prefetch: 10

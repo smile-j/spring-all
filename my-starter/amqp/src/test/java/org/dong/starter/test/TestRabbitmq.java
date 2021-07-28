@@ -217,8 +217,8 @@ public class TestRabbitmq {
      */
     @Test
     public void test(){
-        rabbitTemplate.convertAndSend("hello","hello world");
-//        rabbitTemplate.convertAndSend("demo_return_queue","hello world");
+//        rabbitTemplate.convertAndSend("hello","hello world");
+        rabbitTemplate.convertAndSend("demo_return_queue","hello world");
     }
 
 }

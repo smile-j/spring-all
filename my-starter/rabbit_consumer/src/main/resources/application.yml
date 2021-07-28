@@ -13,12 +13,12 @@ spring:
     # 消息发送到交换机确认机制 是否需要回调
     publisher-returns: true
     publisher-confirm-type: simple
-    listener:
-      direct:
-        acknowledge-mode: manual
-        retry:
-          enabled: true
-          max-attempts: 5
+#    listener:
+#      direct:
+#        acknowledge-mode: manual
+#        retry:
+#          enabled: true
+#          max-attempts: 5
       #        prefetch: 1
       type: simple
       simple:

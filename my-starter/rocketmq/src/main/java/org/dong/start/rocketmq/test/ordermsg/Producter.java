@@ -31,7 +31,9 @@ public class Producter {
                 new OrderVo().setOrderId(1039L).setDesc("创建"),new OrderVo().setOrderId(1063L).setDesc("创建"),
                 new OrderVo().setOrderId(2039L).setDesc("创建"),new OrderVo().setOrderId(1039L).setDesc("付款"),
                 new OrderVo().setOrderId(1063L).setDesc("付款"),new OrderVo().setOrderId(1039L).setDesc("推送"),
-                new OrderVo().setOrderId(2039L).setDesc("付款"),new OrderVo().setOrderId(1039L).setDesc("完成")
+                new OrderVo().setOrderId(2039L).setDesc("付款"),new OrderVo().setOrderId(1039L).setDesc("完成"),
+                new OrderVo().setOrderId(20).setDesc("付款"),new OrderVo().setOrderId(21).setDesc("完成"),
+                new OrderVo().setOrderId(22).setDesc("付款"),new OrderVo().setOrderId(23).setDesc("完成")
         );
 
         //1．创建消息生产者，指定生产者所属的组名
@@ -62,10 +64,14 @@ public class Producter {
                 public MessageQueue select(List<MessageQueue> list, Message message, Object o) {
                     long oderId = (long) o;
                     long index = oderId%list.size();
+                    System.out.println(oderId+"====="+index);
                     return list.get((int) index);
                 }
             },vo.getOrderId()) ;
-            System.out.println(sendResult);
+//            System.out.println(sendResult);
+            System.out.println(String.format("SendResult status:%s, queueId:%d, body:%s",
+                    sendResult.getSendStatus(),
+                    sendResult.getMessageQueue().getQueueId()));
         }
         //6．关闭生产者
         producer.shutdown();

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @Description ack 手动接受
  * @date 2021/7/18
  */
-//@Component
+@Component
 @Slf4j
 public class AckListener {
 
@@ -31,8 +31,8 @@ public class AckListener {
             TimeUnit.SECONDS.sleep(2);
             log.info("消费者------"+new String(message.getBody()));
             log.info("处理业务逻辑......");
-            int i = 3/0;
-            channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
+//            int i = 3/0;
+//            channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
         }catch (Exception e){
             log.error("receive-message异常：[{}]",e.getMessage());
             log.error("receive异常：[{}]",e);
