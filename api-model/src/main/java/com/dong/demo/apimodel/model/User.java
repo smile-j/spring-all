@@ -1,6 +1,5 @@
 package com.dong.demo.apimodel.model;
 
-import lombok.Data;
 
 import java.util.Date;
 

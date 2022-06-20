@@ -6,7 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "根据参数对外提人员信息", tags = "POS预警查询有关用户相关信息")
+@Api(value = "查询人员信息", tags = "查询有关用户相关信息")
 @RestController
 @RequestMapping("/user")
 public interface TestInterface {

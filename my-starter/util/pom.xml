@@ -12,6 +12,7 @@
     <modules>
         <module>util-spring-boot-autoconfigure</module>
         <module>util-spring-boot-starter</module>
+        <module>util-springboot-log-start</module>
     </modules>
 
     <artifactId>util</artifactId>

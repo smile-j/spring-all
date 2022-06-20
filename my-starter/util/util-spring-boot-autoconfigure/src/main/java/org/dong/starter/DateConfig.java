@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 public class DateConfig {
 
     @Bean
-    public DateUtil getUtil(){
+    public DateUtil getDateUtil(){
+        System.out.println("-=-=-=-=-=-=-=");
         return new DateUtil();
     }
 }

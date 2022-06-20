@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
  * @Description
  * @date 2021/7/24
  */
-@Component
-@RocketMQMessageListener(topic = "",consumerGroup = "")
+//@Component
+//@RocketMQMessageListener(topic = "",consumerGroup = "")
 public class TranListener implements TransactionListener {
     /**
      * 执行本地事务

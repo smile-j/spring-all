@@ -7,6 +7,8 @@ import java.util.concurrent.CyclicBarrier;
 /**
  * CycliBarrier  招呼神龙
  *
+ * CyclicBarrier 基于 Condition 来实现的
+ *
  */
 public class CycliBarrierDemo {
 
@@ -27,8 +29,10 @@ public class CycliBarrierDemo {
                 } catch (BrokenBarrierException e) {
                     e.printStackTrace();
                 }
+                System.out.println(Thread.currentThread().getName()+"...end");
             },String.valueOf(i)).start();
         }
+        System.out.println(Thread.currentThread().getName()+"...end");
     }
 
 }

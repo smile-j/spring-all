@@ -17,7 +17,7 @@ public class SemaphoreDemo {
             new Thread(()->{
                 try {
                     semaphore.acquire();
-                    System.out.println(Thread.currentThread().getName()+"\t 抢到车位");
+                    System.out.println(Thread.currentThread().getName()+"\t 抢到车位,空闲的车位有:"+semaphore.availablePermits());
                     TimeUnit.SECONDS.sleep(3);
                     System.out.println(Thread.currentThread().getName()+"\t停车3秒离开 ");
                 } catch (InterruptedException e) {

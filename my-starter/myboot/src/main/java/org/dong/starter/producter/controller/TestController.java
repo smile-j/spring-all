@@ -22,7 +22,7 @@ public class TestController {
     private DateUtil dateUtil;
 
     @GetMapping("testGet")
-    public Object testUtil(){
+    public String testUtil(){
         return "hello!=="+dateUtil.getLocalTime();
     }
 

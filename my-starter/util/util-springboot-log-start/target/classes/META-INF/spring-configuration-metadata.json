@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "util.log",
+      "type": "com.dong.start.log.atuoconfigure.LogProperties",
+      "sourceType": "com.dong.start.log.atuoconfigure.LogProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "util.log.name",
+      "type": "java.lang.String",
+      "sourceType": "com.dong.start.log.atuoconfigure.LogProperties",
+      "defaultValue": "默认拦截级别"
+    }
+  ],
+  "hints": []
+}

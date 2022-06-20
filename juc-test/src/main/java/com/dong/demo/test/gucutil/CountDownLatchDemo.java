@@ -7,6 +7,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * CountDownLatch 计数器
  *百米比赛
+ * CountDownLatch 基于 AQS 的共享模式的使用
  *
  */
 public class CountDownLatchDemo {

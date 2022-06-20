@@ -55,7 +55,25 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        System.out.println("cpu的个数："+Runtime.getRuntime().availableProcessors());
+       String str1 = new StringBuilder("ab").append("s").toString();
+        System.out.println(str1==str1.intern());
+
+        System.out.println();
+
+        String str2 = new StringBuilder("ja").append("va").toString();
+        System.out.println(str2==str2.intern());
+
+        System.out.println("============================");
+//        String s= "ab";
+//        String ss= new String("ab");
+        String sb = new StringBuilder("ab").toString();
+//        String intern = sb.intern();
+//        System.out.println(s==intern);
+//        System.out.println(ss==intern);
+//        System.out.println(sb==intern);
+        System.out.println(sb==sb.intern());
+
+  /*      System.out.println("cpu的个数："+Runtime.getRuntime().availableProcessors());
 
         ShareData shareData = new ShareData();
 
@@ -68,7 +86,7 @@ public class Main {
             shareData.add2();
         },"BBB").start();
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(5);*/
 
     }
 

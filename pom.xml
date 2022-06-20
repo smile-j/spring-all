@@ -23,6 +23,7 @@
         <module>webfluxClient</module>
         <module>boot_reids</module>
         <module>my-starter</module>
+        <module>nettyStart</module>
     </modules>
 
 

@@ -7,7 +7,6 @@
         <groupId>com.dong.demo</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.dong.demo</groupId>
     <artifactId>api-model</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api-model</name>
@@ -38,6 +37,12 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
