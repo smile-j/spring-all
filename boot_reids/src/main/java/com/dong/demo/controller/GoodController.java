@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 /**
  * @ClassName GoodController
@@ -62,6 +65,25 @@ public class GoodController {
                 redissonLock.unlock();
             }
         }
+    }
+
+    public String testThreadState() throws ExecutionException, InterruptedException {
+        FutureTask<String> futureTask = new FutureTask<>(() -> {
+            System.out.println("....start");
+            int ii =1/0;
+            System.out.println("....end");
+            return "Ok";
+        });
+        new Thread(futureTask).start();
+        futureTask.get();
+
+        new Thread(()->{
+            System.out.println("....start");
+            int ii =1/0;
+            System.out.println("....end");
+        }).start();
+
+        return "OK";
     }
 
 }

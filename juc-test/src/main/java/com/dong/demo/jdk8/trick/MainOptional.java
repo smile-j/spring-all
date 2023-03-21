@@ -1,18 +1,25 @@
 package com.dong.demo.jdk8.trick;
 
+import com.alibaba.fastjson.JSON;
 import com.dong.demo.jdk8.trick.ifesle.UserEntry;
+import com.google.common.collect.Lists;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class MainOptional {
     public static void main(String[] args) {
+
+        System.out.println(JSON.toJSONString(Lists.newArrayList(1,3,9,3,2).stream().sorted((e1,e2)-> e1-e2).collect(Collectors.toList())));
         UserEntry user = new UserEntry();
         /**
          * name为空不用判断
          */
         int len = Optional.ofNullable(user).map(UserEntry::getName).map(name->name.length()).orElse(0);
         System.out.println(len);
+        System.out.println("--------------------");
         testElse();
 //        testFaltMap();
 //        Integer num = 23;

@@ -2,6 +2,8 @@ package com.dong.demo;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * 验证
@@ -10,6 +12,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  */
 class ShareData{
+
+    public void test(){
+        Function<String, Integer> function;
+        function = (e->{return 1;});
+
+        BiFunction<Integer,Integer,Integer> biFunction =(x1,x2)->{
+            return x1+x2;
+        };
+
+        System.out.println(function.apply("123"));
+    }
 
     private volatile AtomicInteger atomicInteger = new AtomicInteger();
 
@@ -52,8 +65,26 @@ class ShareData{
 
 public class Main {
 
+    public interface CalFun3<T,U,L, R> {
+
+        R apply(T t, U u,L l);
+
+//    R apply(T t);
+
+    }
+
 
     public static void main(String[] args) throws InterruptedException {
+
+        CalFun3<String,String,String,String> calFun3 = ((x1,x2,x3)->{return x1+x2+x3;});
+
+        CalFun2<String,String,String,String> calFun2 = ((x1,x2,x3)->{return x1+x2+x3;});
+        CalFun<String,Integer>  calFun = (e->{return e.length();});
+
+        Function<String, Integer> function;
+        function = (e->{return e.length();});
+        System.out.println(function.apply("123"));;
+
 
        String str1 = new StringBuilder("ab").append("s").toString();
         System.out.println(str1==str1.intern());

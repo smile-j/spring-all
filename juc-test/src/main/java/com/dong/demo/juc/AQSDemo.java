@@ -6,9 +6,6 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @ClassName AQSDemo
  * @Description TODO
- * @Author Oneby
- * @Date 2021/1/21 11:08
- * @Version 1.0
  */
 public class AQSDemo {
     public static void main(String[] args) {
