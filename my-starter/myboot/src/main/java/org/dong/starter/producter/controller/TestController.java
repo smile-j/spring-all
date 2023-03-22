@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.dong.starter.DateUtil;
+import org.dong.starter.api.Result;
 import org.dong.starter.vo.ReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,11 @@ public class TestController {
     @GetMapping("testGet")
     public String testUtil(){
         return "hello!=="+dateUtil.getLocalTime();
+    }
+
+    @GetMapping("testGet2")
+    public Result testUtil2(){
+        return Result.success("hello!=="+dateUtil.getLocalTime());
     }
 
     @PostMapping
